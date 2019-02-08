@@ -16,12 +16,12 @@ class Slice:
     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV) # convert the RGB image to HSV (Hue based)
 
     # Set the colour boundaries
-    lower_red = numpy.array([ 50,  50, 170]) # lower boundary of colour (e.g. red) -- dark
-    upper_red = numpy.array([255, 255, 190]) # upper boundary of colour (e.g. red) -- bright
+    lower_red = numpy.array([ 90, 0, 0]) # lower boundary of colour (e.g. red) -- dark
+    upper_red = numpy.array([255, 0, 0]) # upper boundary of colour (e.g. red) -- bright
 
     # Essentially, anything in range of the HSV spectrum...
     # ...between the upper and lower boundaries is detected
-    mask = cv2.inRange(hsv, lower_yellow, upper_yellow) 
+    mask = cv2.inRange(hsv, lower_red, upper_red) 
 
     # colour is sliced and is applied to a new layer mask
     # bitwise_and: computes bit-wise AND of two arrays element-wise
