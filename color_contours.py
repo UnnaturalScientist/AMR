@@ -29,6 +29,9 @@ class Slice:
     cv2.imshow("HSV slice window", mask ) # window displaying the mask is shown
     cv2.waitKey(3)
 
+    # publish string (Task 3)
+    
+    
 rospy.init_node('slice')
 slice = Slice()
 rospy.spin()
