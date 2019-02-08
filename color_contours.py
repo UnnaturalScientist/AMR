@@ -42,6 +42,7 @@ rospy.init_node('slice')
 slice = Slice()
 rospy.spin()
 
+# Main for Task 3
 if __name__=='__main__':
     try:
         mean_publisher()
