@@ -3,6 +3,8 @@
 #!/usr/bin/env python
 
 import rospy, cv2, cv_bridge, numpy
+from numpy import mean
+from std_msgs.msg import String
 from sensor_msgs.msg import Image
 
 class Slice:
@@ -29,12 +31,24 @@ class Slice:
     cv2.imshow("HSV slice window", mask ) # window displaying the mask is shown
     cv2.waitKey(3)
 
-    # publish string (Task 3)
-    
+  # publish string (Task 3)
+  def mean_publisher():
+    rospy.init_node('mean_pub')
+    pub = rospy.Publisher('print_mean', String, queue_size=10)
+    p = rospy.Publisher('/result_topic', String)
+    while not rospy.is_shutdown():
+       pub.publish('print_mean') #This may need changing
+       p.sleep()
     
 rospy.init_node('slice')
 slice = Slice()
 rospy.spin()
+
+if __name__=='__main__':
+    try:
+        mean_publisher()
+    except rospy.ROSInterruptException:
+        pass
 
 
 
