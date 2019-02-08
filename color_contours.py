@@ -1,5 +1,3 @@
-  GNU nano 2.5.3                  File: color_contours2.py                                           
-
 #!/usr/bin/env python
 
 import rospy, cv2, cv_bridge, numpy
