@@ -1,17 +1,17 @@
 #!/usr/bin/env python
 
 import rospy
+from std_msgs.msg import String
 
-from std_msgs.msg import Int32
-//define the display text
+# define the display text
 def callback(data):
     rospy.loginfo("I receive %s", data.data)
 
-//define the subscriber
-def random_subscriber():
-    rospy.init_node('random_subscriber')
-    rospy.Subscriber('rand_no',Int32, callback)
+# define the subscriber
+def mean_subscriber():
+    rospy.init_node('mean_sub')
+    rospy.Subscriber('print_mean',String, callback)
     rospy.spin()
 
 if __name__=='__main__':
-    random_subscriber()
+    mean_subscriber()
