@@ -17,13 +17,13 @@ class image_converter:
     cv2.namedWindow("window", 1) # provides one GUI window
     self.image_sub = rospy.Subscriber('camera/rgb/image_raw', 
                                       Image, self.image_callback)
-  def image_callback(self, msg): # Callback to the ROS Image Message
+  def image_callback(self, data): # Callback to the ROS Image Message
     # imgmsg_to_cv2 = catches any conversion errors
     namedWindow("window") # name the window "window" -- also done for blur and canny
     #namedWindow("blur")
     #namedWindow("canny")
 
-    image = self.bridge.imgmsg_to_cv2(msg,desired_encoding='bgr8') # 8 bit RGB/BGR image
+    image = self.bridge.imgmsg_to_cv2(data,desired_encoding='bgr8') # 8 bit RGB/BGR image
     gray_img = cvtColor(image, COLOR_BGR2GRAY) # converts the image to grayscale
     print mean(gray_img) # prints the mean of the pixel values
 
