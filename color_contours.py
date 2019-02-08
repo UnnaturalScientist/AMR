@@ -18,8 +18,8 @@ class Slice:
     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV) # convert the RGB image to HSV (Hue based)
 
     # Set the colour boundaries
-    lower_red = numpy.array([ 50,  50, 170]) # lower boundary of colour (e.g. yellow) -- dark
-    upper_red = numpy.array([255, 255, 190]) # upper boundary of colour (e.g. yellow) -- bright
+    lower_red = numpy.array([ 50,  50, 170]) # lower boundary of colour (e.g. red) -- dark
+    upper_red = numpy.array([255, 255, 190]) # upper boundary of colour (e.g. red) -- bright
 
     # Essentially, anything in range of the HSV spectrum...
     # ...between the upper and lower boundaries is detected
