@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+##!/usr/bin/env python
 
 import rospy
 import sys
@@ -19,6 +19,7 @@ class colorContour():
         self.cv_window_name = self.node_name
         self.bridge = CvBridge()
 
+	self.pub = rospy.Publisher("/result_topic", String, colorContour, queue_size=10)
         self.sub = rospy.Subscriber("/camera/rgb/image_raw", Image, self.image_callback)
         rospy.Timer(rospy.Duration(0.03), self.open_windows) # timer for displaying windows
 
@@ -32,7 +33,7 @@ class colorContour():
         	cv2.imshow("Slice",self.processed_image)
 
       		cv2.waitKey(3)
-
+	
     	except:
 		pass
 
@@ -49,16 +50,45 @@ class colorContour():
 
     def color_slice(self, cam_view):
         hsv = cv2.cvtColor(cam_view, cv2.COLOR_BGR2HSV)
-	print mean(hsv)	# prints the mean
 	lower_blue = np.array([ 10,  10,  10]) # HSV not RGB
 	upper_blue = np.array([255, 255, 250])
 	mask = cv2.inRange(hsv, lower_blue, upper_blue)        
 	masked = cv2.bitwise_and(self.cam_view, self.cam_view, mask=mask)
 	
         return masked
+
+"""
+Example 1: Get the mean
+
+	print np.mean(hsv[:, :, 0])
+        print np.mean(hsv[:, :, 1])
+        print np.mean(hsv[:, :, 2])
+
+	print mean(hsv)
+
+
+Example 2: Get the mean
+
+# the shape gives you the dimensions
+	h = img3.shape[0]
+	w = img3.shape[1]
+
+# loop over the image, pixel by pixel
+	count = 0
+
+# a slow way to iterate over the pixels
+	for y in range(0, h):
+	    for x in range(0, w):
+    
+	# threshold the pixel
+        if img3[y, x] > 0:
+            count += 1
+
+print('count edge pixels: %d' % count)
+
+"""
 	
 if __name__ == '__main__':
 
 	colorContour()
 	rospy.spin()
-
