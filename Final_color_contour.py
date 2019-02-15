@@ -19,9 +19,8 @@ class colorContour():
         self.cv_window_name = self.node_name
         self.bridge = CvBridge()
 
-        rospy.Subscriber("/camera/rgb/image_raw", Image, self.image_callback)
+        self.sub = rospy.Subscriber("/camera/rgb/image_raw", Image, self.image_callback)
         rospy.Timer(rospy.Duration(0.03), self.open_windows) # timer for displaying windows
-
 
     def open_windows(self,event):
     	try:
@@ -29,7 +28,7 @@ class colorContour():
 		cv2.namedWindow("Cammy", cv2.WINDOW_NORMAL)
 		cv2.namedWindow("Slice", cv2.WINDOW_NORMAL)
 
-        	cv2.imshow("Cammy",self.frame)
+        	cv2.imshow("Cammy",self.cam_view)
         	cv2.imshow("Slice",self.processed_image)
 
       		cv2.waitKey(3)
@@ -40,24 +39,26 @@ class colorContour():
     def image_callback(self, data):
         # Use cv_bridge() to convert the ROS image to OpenCV format
         try:
-            self.frame = self.bridge.imgmsg_to_cv2(data, "bgr8")
+            self.cam_view = self.bridge.imgmsg_to_cv2(data, "bgr8")
         except CvBridgeError, e: # try and catch called from Cv2
             print e
 	    pass
 
-        frame = np.array(self.frame, dtype = np.uint8)
-  	self.processed_image = self.color_slice(frame)
+        cam_view = np.array(self.cam_view, dtype = np.uint8)
+  	self.processed_image = self.color_slice(cam_view)
 
-    def color_slice(self, frame):
-        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    def color_slice(self, cam_view):
+        hsv = cv2.cvtColor(cam_view, cv2.COLOR_BGR2HSV)
 	print mean(hsv)	# prints the mean
 	lower_blue = np.array([ 10,  10,  10]) # HSV not RGB
 	upper_blue = np.array([255, 255, 250])
 	mask = cv2.inRange(hsv, lower_blue, upper_blue)        
-	masked = cv2.bitwise_and(self.frame, self.frame, mask=mask)	
+	masked = cv2.bitwise_and(self.cam_view, self.cam_view, mask=mask)
 	
         return masked
 	
+if __name__ == '__main__':
 
-colorContour()
-rospy.spin()
+	colorContour()
+	rospy.spin()
+
