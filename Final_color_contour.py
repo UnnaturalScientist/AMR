@@ -50,45 +50,19 @@ class colorContour():
 
     def color_slice(self, cam_view):
         hsv = cv2.cvtColor(cam_view, cv2.COLOR_BGR2HSV)
-	lower_blue = np.array([ 10,  10,  10]) # HSV not RGB
+	lower_blue = np.array([100, 100, 100]) # HSV not RGB
 	upper_blue = np.array([255, 255, 250])
 	mask = cv2.inRange(hsv, lower_blue, upper_blue)        
 	masked = cv2.bitwise_and(self.cam_view, self.cam_view, mask=mask)
+		
+	self.pub.publish(str(np.mean(hsv[:, :, 0]))) #H?
+        self.pub.publish(str(np.mean(hsv[:, :, 1]))) #S?
+        self.pub.publish(str(np.mean(hsv[:, :, 2]))) #V?
+	#print mean(hsv)
 	
         return masked
-
-"""
-Example 1: Get the mean
-
-	print np.mean(hsv[:, :, 0]) #H?
-        print np.mean(hsv[:, :, 1]) #S?
-        print np.mean(hsv[:, :, 2]) #V?
-
-	print mean(hsv)
-
-#-----------------------------------------
-
-Example 2: Get the mean
-
-# the shape gives you the dimensions
-	h = img3.shape[0]
-	w = img3.shape[1]
-
-# loop over the image, pixel by pixel
-	count = 0
-
-# a slow way to iterate over the pixels
-	for y in range(0, h):
-	    for x in range(0, w):
-    
-	# threshold the pixel
-        if img3[y, x] > 0:
-            count += 1
-
-print('count edge pixels: %d' % count)
-
-"""
 	
+
 if __name__ == '__main__':
 
 	colorContour()
