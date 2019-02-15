@@ -1,4 +1,4 @@
-##!/usr/bin/env python
+#!/usr/bin/env python
 
 import rospy
 import sys
@@ -60,12 +60,13 @@ class colorContour():
 """
 Example 1: Get the mean
 
-	print np.mean(hsv[:, :, 0])
-        print np.mean(hsv[:, :, 1])
-        print np.mean(hsv[:, :, 2])
+	print np.mean(hsv[:, :, 0]) #H?
+        print np.mean(hsv[:, :, 1]) #S?
+        print np.mean(hsv[:, :, 2]) #V?
 
 	print mean(hsv)
 
+#-----------------------------------------
 
 Example 2: Get the mean
 
@@ -92,3 +93,4 @@ if __name__ == '__main__':
 
 	colorContour()
 	rospy.spin()
+
