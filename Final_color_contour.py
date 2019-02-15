@@ -19,7 +19,7 @@ class colorContour():
         self.cv_window_name = self.node_name
         self.bridge = CvBridge()
 
-	self.pub = rospy.Publisher("/result_topic", String, colorContour, queue_size=10)
+	self.pub = rospy.Publisher("/result_topic", String, queue_size=10)
         self.sub = rospy.Subscriber("/camera/rgb/image_raw", Image, self.image_callback)
         rospy.Timer(rospy.Duration(0.03), self.open_windows) # timer for displaying windows
 
